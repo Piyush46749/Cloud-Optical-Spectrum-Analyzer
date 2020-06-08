@@ -89,10 +89,10 @@ For instance- If the user writes "TRACE" and clicks on the "EXECUTE" button, the
 For instance- http://54.237.44.5:5000/api/TRACE will retrieve the JSON response.
 ```
 
-* **Zoom, Pan, Save (PNG, JPEG), Print, and Read Data Values of the Plot**- Upon plotting the graph, the user can select the specific area on the plot (using the mouse) and have that area zoomed. 
-
+* **Zoom, Pan, Save (PNG, JPEG), Print, and Read Data Values of the Plot**- Upon plotting the graph, the user can select the specific area on the plot (using the mouse) and have that area zoomed.
+Once the plot is zoomed, the user can "PAN", "READ VALUES" of the graph, "RESET" the graphs, or click on "More Options" button (top-right of the plot) to "PRINT", or "SAVE" the plot in "JPEG" or "PNG" format.
 ```bash
-Once the plot is zoomed, the user can "PAN", "RESET" the graphs, or click on "More Options" button (top-right of the plot) to "PRINT", or "SAVE" the plot in "JPEG" or "PNG" format.
+I have provided the PRINT, and SAVE functionality so that user can save the graph instantly and keep it as a record whenever needed.
 ```
 
 * **Communication Logs**- It provides a scrollable text area with a communication log between instrument & user (useful for debugging hardware issues in the laboratory).

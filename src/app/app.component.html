@@ -1,0 +1,55 @@
+<div class="jumbotron">
+  <h1>Simple, Intutive Optical Spectrum Analyzer</h1>
+</div>
+
+<div class="chart_button">
+
+  <div id="chartContainer" class="chart-view">
+  </div>
+
+  <div class="action-container">
+    <div>
+      <button class="single_button" [disabled]="isPollerActive" (click)="onClickSingleTrace('NOT_POLLER')">SINGLE</button>
+      <button class="start_button" [disabled]="isPollerActive" (click)="onClickStartStop('START')">START</button>
+      <button class="stop_button" [disabled]="!isPollerActive" (click)="onClickStartStop('STOP')">STOP</button>
+      <h2 id="overlay_heading"> Overlay Successive Plots? </h2>
+      <div class="buttons">
+        <div class="btn_yes">
+          <input [(ngModel)]="persistDataOption" type="radio" value="Y" (click)="onClickRadioBtn('Y')" name="group1" />
+          YES
+        </div>
+  
+        <div class="btn_no">
+          <input [(ngModel)]="persistDataOption" type="radio" value="N" (click)="onClickRadioBtn('N')" name="group1" />
+          NO
+        </div>
+      </div>
+    </div>
+    <div class="query-block">
+      <h2 id="query_heading">Execute Query</h2>
+      <input id="query_text_field" type="text" [(ngModel)]="commandIp" />
+      <button class="cmd_button" (click)="onClickGetData()">EXECUTE</button>
+    </div>
+  </div>
+
+</div>
+
+<div class="log_cmd">
+
+  <div class="logs-container">
+    <h2 id="log_heading">Communication Log</h2>
+    <div class="logs-output">
+      <pre>{{logsContent}}</pre>
+    </div>
+  </div>
+
+  <div class="cmd-container">
+   <h2 id="query_heading">Query Output</h2>
+    <!--  <input id="query_text_field" type="text" [(ngModel)]="commandIp" />
+    <button class="cmd_button" (click)="onClickGetData()">EXECUTE</button> -->
+
+    <div class="query-output">
+      <pre>{{ queryResult | json }}</pre>
+    </div>
+  </div>
+</div>

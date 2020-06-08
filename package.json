@@ -1,5 +1,5 @@
 {
-  "name": "Cloud-Optical-Spectrum-Analyzer",
+  "name": "cloud_o",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -22,10 +22,7 @@
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2",
-    "angular-highcharts": "5.2.0",
-    "core-js": "2.6.5",
-    "highcharts": "^6.0.4",
-    "highcharts-angular": "^2.4.0"
+    "core-js": "2.6.5"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.1",

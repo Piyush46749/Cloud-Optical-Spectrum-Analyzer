@@ -9,18 +9,18 @@
 
   <div class="action-container">
     <div>
-      <button class="single_button" [disabled]="isPollerActive" (click)="onClickSingleTrace('NOT_POLLER')">SINGLE</button>
-      <button class="start_button" [disabled]="isPollerActive" (click)="onClickStartStop('START')">START</button>
-      <button class="stop_button" [disabled]="!isPollerActive" (click)="onClickStartStop('STOP')">STOP</button>
+      <button class="single_button" [disabled]="isInterval" (click)="onClickSingleTrace('notInterval')">SINGLE</button>
+      <button class="start_button" [disabled]="isInterval" (click)="onClickStartStop('START')">START</button>
+      <button class="stop_button" [disabled]="!isInterval" (click)="onClickStartStop('STOP')">STOP</button>
       <h2 id="overlay_heading"> Overlay Successive Plots? </h2>
       <div class="buttons">
         <div class="btn_yes">
-          <input [(ngModel)]="persistDataOption" type="radio" value="Y" (click)="onClickRadioBtn('Y')" name="group1" />
+          <input [(ngModel)]="persistDataOption" type="radio" value="Y" (click)="onClickPersistDataOption('Y')" name="group1" />
           YES
         </div>
   
         <div class="btn_no">
-          <input [(ngModel)]="persistDataOption" type="radio" value="N" (click)="onClickRadioBtn('N')" name="group1" />
+          <input [(ngModel)]="persistDataOption" type="radio" value="N" (click)="onClickPersistDataOption('N')" name="group1" />
           NO
         </div>
       </div>
@@ -49,7 +49,7 @@
     <button class="cmd_button" (click)="onClickGetData()">EXECUTE</button> -->
 
     <div class="query-output">
-      <pre>{{ queryResult | json }}</pre>
+      <pre>{{ requestOutput | json }}</pre>
     </div>
   </div>
 </div>

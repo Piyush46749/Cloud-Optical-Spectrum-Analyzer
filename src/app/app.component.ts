@@ -9,94 +9,94 @@ import * as CanvasJS from './canvasjs.min';
 })
 export class AppComponent implements OnInit {
   title = 'OSA';
-  commandIp: any;
-  queryResult;
+  logic: any;
+  requestOutput;
   poller;
   persistDataOption = 'N';
-  graphData = [];
+  chartData = [];
   numberOfLayers = 1;
   maxNumberOfLayers = 4;
-  logsContent: any;
-  isPollerActive = false;
+  communicationText: any;
+  isInterval = false;
   lineColors = ['#3BFF00', 'purple', '#FF0000', '#FFC300 '];
-  constructor(private _appService: AppService) { }
+  constructor(private service: AppService) { }
 
   ngOnInit(): void {
-    this.logsContent = new Date() + '-> Please wait! Starting the service... \n';
-    this.onClickSingleTrace('NOT_POLLER');
+    this.communicationText = new Date() + '-> Please wait! Starting the service... \n';
+    this.onClickSingleTrace('notInterval');
   }
 
-  onClickSingleTrace(requestFrom) {
-    this._appService.getDataForSingleInstance().subscribe((resdata: {}) => {
+  onClickSingleTrace(Source) {
+    this.service.getSingleTrace().subscribe((resdata: {}) => {
       if (typeof resdata['data'] != 'string' && resdata['code'] == 200) {
-        if (requestFrom == 'POLLER' && !this.isPollerActive) return;
+        if (Source == 'INTERVAL' && !this.isInterval) return;
 
-        this.logsContent +=
+        this.communicationText +=
           new Date() + '-> Graph plotted for the trace...\n';
         let xData = resdata['data']['xdata'];
         let yData = resdata['data']['ydata'];
         let lineColor = this.lineColors[0];
 
         if (xData.length != 0 && yData.length != 0) {
-          this.logsContent +=
+          this.communicationText +=
             new Date() +
             '-> Data fetched... \n';
           this.renderChart(xData, yData, lineColor);
         }
 
         else if (this.persistDataOption == 'Y') {
-          this.logsContent +=
+          this.communicationText +=
             new Date() +
             '-> Overlay successive plots is enabled but no data is received...\n';
-          this.logsContent +=
+          this.communicationText +=
             new Date() +
             '-> Again trying to fetch data!...\n';
-          this.onClickSingleTrace('NOT_POLLER');
+          this.onClickSingleTrace('notInterval');
         }
 
         
 
 
         else {
-          this.logsContent +=
+          this.communicationText +=
             new Date() +
             '-> Overlay successive plot is disabled, no data received...\n';
         }
       }
 
       else {
-        this.logsContent +=
+        this.communicationText +=
           new Date() +
           '-> Invalid response received, please reload the page...\n';
       }
     });
   }
 
-  onClickRadioBtn(option?) {
+  onClickPersistDataOption(option?) {
     this.persistDataOption = option;
   }
 
   onClickGetData() {
     let payload = {
-      query: this.commandIp,
+      query: this.logic,
     };
-    this.queryResult = 'Executing command: ' + this.commandIp;
-    this.logsContent +=
+    this.requestOutput = 'Executing command: ' + this.logic;
+    this.communicationText +=
       new Date() +
       '-> User queried : ' +
-      this.commandIp +
+      this.logic +
       ' \n';
-    this._appService.getDataForQuery(payload).subscribe((resdata: {}) => {
+    this.service.getRequestData(payload).subscribe((resdata: {}) => {
       if (resdata['code'] == 200) {
-        this.queryResult = resdata['data'];
-        if (this.isTextJSON(this.queryResult)) {
-          this.queryResult = JSON.parse(this.queryResult);
+        this.requestOutput = resdata['data'];
+        if (this.isValidJSON(this.requestOutput)) {
+          this.requestOutput = JSON.parse(this.requestOutput);
         }
       }
     });
   }
 
-  isTextJSON(text) {
+  isValidJSON(text) {
     return /^[\],:{}\s]*$/.test(
       text
         .replace(/\\["\\\/bfnrtu]/g, '@')
@@ -117,17 +117,17 @@ export class AppComponent implements OnInit {
     dataSeries['lineColor'] = lineColor;
     dataSeries['dataPoints'] = dataPoints;
     if (this.persistDataOption == 'N') {
-      this.graphData = [];
-      this.graphData.push(dataSeries);
+      this.chartData = [];
+      this.chartData.push(dataSeries);
     } else {
       dataSeries['lineColor'] = this.lineColors[this.numberOfLayers];
-      this.graphData.push(dataSeries);
+      this.chartData.push(dataSeries);
       this.numberOfLayers++;
       debugger;
       if (this.numberOfLayers > this.maxNumberOfLayers) {
-        let color = this.graphData[0]['lineColor'];
-        this.graphData.shift();
-        this.graphData[this.graphData.length - 1]['lineColor'] = color;
+        let color = this.chartData[0]['lineColor'];
+        this.chartData.shift();
+        this.chartData[this.chartData.length - 1]['lineColor'] = color;
       }
     }
 
@@ -155,23 +155,23 @@ export class AppComponent implements OnInit {
 
       },
 
-      data: this.graphData,
+      data: this.chartData,
     });
     chart.render();
   }
 
   onClickStartStop(clickType?) {
-    this.graphData = [];
+    this.chartData = [];
     if (clickType == 'START') {
-      this.isPollerActive = true;
-      this.logsContent += new Date() + '-> User clicked on START button...\n';
+      this.isInterval = true;
+      this.communicationText += new Date() + '-> User clicked on START button...\n';
       this.poller = setInterval((_) => {
-        this.onClickSingleTrace('POLLER');
+        this.onClickSingleTrace('INTERVAL');
       }, 1000);
     } else {
-      this.isPollerActive = false;
+      this.isInterval = false;
       clearInterval(this.poller);
-      this.logsContent += new Date() + '-> User clicked on STOP button...\n';
+      this.communicationText += new Date() + '-> User clicked on STOP button...\n';
     }
   }
 }

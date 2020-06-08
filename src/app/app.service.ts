@@ -19,7 +19,7 @@ export class AppService {
     return body || {};
   }
 
-  getTokenHeaders() {
+  setRequestHeaders() {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -27,23 +27,25 @@ export class AppService {
     };
   }
 
-  getDataForSingleInstance() {
+  getRequestData(data) {
     return this.http
-      .get<any>(URL_CONFIG.BASE_URL + URL_CONFIG.TRACE, this.getTokenHeaders())
+      .post<any>(URL_CONFIG.BASE_URL + URL_CONFIG.QUERY, data, this.setRequestHeaders())
+      .pipe(
+        map(this.extractData),
+        catchError(this.handleError<any>('getDataForQuery'))
+      );
+  }
+
+  getSingleTrace() {
+    return this.http
+      .get<any>(URL_CONFIG.BASE_URL + URL_CONFIG.TRACE, this.setRequestHeaders())
       .pipe(
         map(this.extractData),
         catchError(this.handleError<any>('getDataForSingleInstance'))
       );
   }
 
-  getDataForQuery(data) {
-    return this.http
-      .post<any>(URL_CONFIG.BASE_URL + URL_CONFIG.QUERY, data, this.getTokenHeaders())
-      .pipe(
-        map(this.extractData),
-        catchError(this.handleError<any>('getDataForQuery'))
-      );
-  }
+ 
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {

@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('cloud-osa-app app is running!');
+    expect(page.getTitleText()).toEqual('cloud-osa-coding-challenge app is running!');
   });
 
   afterEach(async () => {

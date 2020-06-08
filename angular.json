@@ -3,21 +3,17 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cloud-osa-app": {
+    "cloud-osa-coding-challenge": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@anguloar-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Cloud-Optical-Spectrum-Analyzer",
+            "outputPath": "dist/cloud-osa-coding-challenge",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -28,7 +24,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -66,18 +62,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "cloud-osa-app:build"
+            "browserTarget": "cloud-osa-coding-challenge:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "cloud-osa-app:build:production"
+              "browserTarget": "cloud-osa-coding-challenge:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "cloud-osa-app:build"
+            "browserTarget": "cloud-osa-coding-challenge:build"
           }
         },
         "test": {
@@ -92,7 +88,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           }
@@ -114,19 +110,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "cloud-osa-app:serve"
+            "devServerTarget": "cloud-osa-coding-challenge:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "cloud-osa-app:serve:production"
+              "devServerTarget": "cloud-osa-coding-challenge:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "cloud-osa-app",
+  "defaultProject": "cloud-osa-coding-challenge",
   "cli": {
-    "analytics": "606d517d-7c21-4958-ad8a-a07b5e14d06b"
+    "analytics": "6ca6b3ab-5a1e-46ad-bd4a-fe5ae47d1e38"
   }
 }
